@@ -1,0 +1,16 @@
+node_modules/
+apps/*/dist/
+apps/server/data/
+*.tsbuildinfo
+*.log
+
+# Agent notes and project docs kept out of git
+.md/
+AGENTS.md
+CLAUDE.md
+
+# Secrets / credentials
+.env*
+!deploy/.env.example
+*.pem
+*.key

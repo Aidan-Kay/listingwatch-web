@@ -1,0 +1,19 @@
+{
+  "name": "@listingwatch/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Contracts, matcher and marketplace tables shared by the ListingWatch server and web app",
+  "exports": {
+    "./schemas": "./src/schemas/index.ts",
+    "./keyword-match": "./src/keyword-match/index.ts",
+    "./marketplaces": "./src/marketplaces/index.ts",
+    "./url-import": "./src/url-import/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}
