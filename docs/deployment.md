@@ -43,12 +43,19 @@ comments in it explain each setting. Then:
 
 ```bash
 cd ~/listingwatch
+mkdir -p data    # before the first start, so it's yours, not root's
 docker compose pull && docker compose up -d
 curl -s http://127.0.0.1:8095/api/health    # {"ok":true,"revision":"<sha>",…}
 ```
 
 A configuration problem stops the container at start with the variable named:
 `docker compose logs listingwatch`.
+
+The app runs as user 1000 inside the container. If `data` doesn't exist when
+the container first starts, Docker creates it owned by root, and the app
+can't write to it (`EACCES` in the logs). Fix it with
+`sudo chown 1000:1000 data`, or remove the empty folder and create it
+yourself if your user is 1000.
 
 Everything the app keeps is in `~/listingwatch/data`: the database, Chromium's
 profile (Vinted cookies), logs and the uploaded sound.

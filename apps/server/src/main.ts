@@ -44,5 +44,15 @@ function reportCrashes(log: Logger): void {
 
 main().catch((error: unknown) => {
   console.error(error instanceof Error ? error.message : error);
+  const hint = startupHint(error);
+  if (hint) console.error(hint);
   process.exit(1);
 });
+
+/** Advice for the start-up failure people most often hit, which the bare error doesn't explain. */
+function startupHint(error: unknown): string | null {
+  const code = (error as NodeJS.ErrnoException | null)?.code;
+  if (code !== "EACCES" && code !== "EPERM") return null;
+  const uid = process.getuid?.() ?? "this user";
+  return `ListingWatch can't write to its data folder. It runs as user ${uid}: make that user the folder's owner (in Docker, create the mounted folder yourself before the first start, or chown it to ${uid}).`;
+}
